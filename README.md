@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GATI DRISHTI
+
+GATI DRISHTI is a next-generation Dynamic Railway ETA Intelligence and Network Management platform. It combines real-time movement data, historical patterns, and network conditions to continuously forecast train arrival times with unprecedented accuracy.
+
+## Features
+
+- **Live Train Tracking & Dynamic ETA**: High-frequency location updates integrated with machine learning models that adapt to current network conditions, adjusting predictions based on weather, congestion, and historical performance.
+- **Network Intelligence Core**: A live simulation dashboard (focusing on the Mumbai — Delhi WR corridor) that visualizes train movements, tracks node congestion, and mathematically predicts overtaking and crossing events.
+- **Historical Intelligence**: Deep analysis of past train runs to identify bottleneck patterns, systemic delays, and station performance metrics.
+- **API Sandbox**: A comprehensive developer portal to test and integrate with our live mock APIs for historical data, infrastructure alerts, and real-time ETAs.
+- **Internationalization (i18n)**: Seamless language switching supporting English, Hindi, Marathi, and Gujarati.
+- **Modern Tech Stack**: Built with Next.js (App Router), Tailwind CSS, Framer Motion, and shadcn/ui for a highly responsive, animated, and accessible user experience.
 
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
+# or npm install, yarn, pnpm
+```
+
+Then, run the development server:
+
+```bash
 bun dev
+# or npm run dev, yarn dev, pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `/app`: Next.js App Router pages (Dashboard, Network Core, API Portal).
+- `/components`: Reusable UI components including train search, live status, AI prediction panels, and network map SVGs.
+- `/lib`: Utility functions, AI prediction logic, and mock data generators for trains, network nodes, and APIs.
+- `/hooks`: Custom React hooks for data polling and state management.
 
-## Learn More
+## Technologies Used
 
-To learn more about Next.js, take a look at the following resources:
+- [Next.js](https://nextjs.org/)
+- [React](https://reactjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Lucide React](https://lucide.dev/)
+- [Framer Motion](https://www.framer.com/motion/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is licensed under the MIT License.

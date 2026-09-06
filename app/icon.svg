@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18181b"/>
+      <stop offset="100%" stop-color="#09090b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e"/> <!-- railway-green -->
+      <stop offset="100%" stop-color="#3b82f6"/> <!-- info-blue -->
+    </linearGradient>
+  </defs>
+  
+  <!-- Rounded square background -->
+  <rect width="256" height="256" rx="56" fill="url(#bg)"/>
+  
+  <!-- Glowing ring -->
+  <circle cx="128" cy="128" r="96" stroke="url(#accent)" stroke-width="12" fill="none" opacity="0.9" />
+  
+  <!-- "Drishti" (Eye) background line -->
+  <path d="M 50 128 Q 128 40 206 128 Q 128 216 50 128" stroke="#3f3f46" stroke-width="8" fill="none" opacity="0.6"/>
+  
+  <!-- Train Front Silhouette (GATI) -->
+  <rect x="96" y="80" width="64" height="76" rx="16" fill="url(#accent)" />
+  
+  <!-- Windshield -->
+  <rect x="108" y="94" width="40" height="24" rx="4" fill="#09090b" />
+  
+  <!-- Headlights -->
+  <circle cx="112" cy="140" r="6" fill="#09090b" />
+  <circle cx="144" cy="140" r="6" fill="#09090b" />
+  
+  <!-- Track lines below the train -->
+  <path d="M 112 164 L 80 204" stroke="url(#accent)" stroke-width="8" stroke-linecap="round" />
+  <path d="M 144 164 L 176 204" stroke="url(#accent)" stroke-width="8" stroke-linecap="round" />
+  
+  <!-- Central track line / beam -->
+  <path d="M 128 156 L 128 204" stroke="url(#accent)" stroke-width="8" stroke-linecap="round" />
+</svg>
