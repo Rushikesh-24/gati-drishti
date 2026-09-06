@@ -33,7 +33,7 @@ export default function ControlRoomPage() {
 
   const addAlert = (type: "INFO" | "MEDIUM" | "HIGH", message: string) => {
     const time = new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
-    setAlerts(prev => [{ id: crypto.randomUUID(), type, message, time }, ...prev].slice(0, 10));
+    setAlerts(prev => [{ id: Date.now(), type, message, time }, ...prev].slice(0, 10));
   }
 
   const handleSimulateDisruption = () => {
