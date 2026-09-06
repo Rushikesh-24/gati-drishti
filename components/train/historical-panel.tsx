@@ -85,32 +85,32 @@ export function HistoricalPanel({ trainNumber }: HistoricalPanelProps) {
           <CardContent className="h-64 px-2">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data.journeyHistory} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
                 <XAxis 
                   dataKey="date" 
-                  tick={{ fontSize: 10, fill: 'hsl(var(--muted-foreground))' }} 
+                  tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }} 
                   axisLine={false}
                   tickLine={false}
                   minTickGap={20}
                 />
                 <YAxis 
-                  tick={{ fontSize: 10, fill: 'hsl(var(--muted-foreground))' }}
+                  tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }}
                   axisLine={false}
                   tickLine={false}
                   tickFormatter={(val) => `${val}m`}
                 />
                 <RechartsTooltip 
-                  contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }}
-                  itemStyle={{ color: 'hsl(var(--foreground))' }}
+                  contentStyle={{ backgroundColor: 'var(--card)', borderColor: 'var(--border)', borderRadius: '8px' }}
+                  itemStyle={{ color: 'var(--foreground)' }}
                 />
-                <ReferenceLine y={data.avgDelayOverall} stroke="hsl(var(--alert-orange))" strokeDasharray="3 3" label={{ position: 'top', value: 'Avg', fill: 'hsl(var(--alert-orange))', fontSize: 10 }} />
+                <ReferenceLine y={data.avgDelayOverall} stroke="var(--color-alert-orange)" strokeDasharray="3 3" label={{ position: 'top', value: 'Avg', fill: 'var(--color-alert-orange)', fontSize: 10 }} />
                 <Line 
                   type="monotone" 
                   dataKey="delay" 
-                  stroke="hsl(var(--info-blue))" 
+                  stroke="var(--color-info-blue)" 
                   strokeWidth={2}
                   dot={false}
-                  activeDot={{ r: 4, fill: 'hsl(var(--info-blue))' }}
+                  activeDot={{ r: 4, fill: 'var(--color-info-blue)' }}
                   name="Delay (min)"
                 />
               </LineChart>
@@ -131,32 +131,32 @@ export function HistoricalPanel({ trainNumber }: HistoricalPanelProps) {
           <CardContent className="h-64 px-2">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data.stationDelays} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="hsl(var(--border))" />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
                 <XAxis 
                   dataKey="station" 
-                  tick={{ fontSize: 10, fill: 'hsl(var(--muted-foreground))' }} 
+                  tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }} 
                   axisLine={false}
                   tickLine={false}
                 />
                 <YAxis 
-                  tick={{ fontSize: 10, fill: 'hsl(var(--muted-foreground))' }}
+                  tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }}
                   axisLine={false}
                   tickLine={false}
                   tickFormatter={(val) => `${val}m`}
                 />
                 <RechartsTooltip 
-                  contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }}
+                  contentStyle={{ backgroundColor: 'var(--card)', borderColor: 'var(--border)', borderRadius: '8px' }}
                 />
                 <Bar 
                   dataKey="avgDelay" 
-                  fill="hsl(var(--alert-red))" 
+                  fill="var(--color-alert-red)" 
                   radius={[4, 4, 0, 0]}
                   name="Avg Accumulated Delay"
                   stackId="a"
                 />
                 <Bar 
                   dataKey="recovery" 
-                  fill="hsl(var(--railway-green))" 
+                  fill="var(--color-railway-green)" 
                   radius={[0, 0, 4, 4]}
                   name="Avg Recovery"
                   stackId="b"
