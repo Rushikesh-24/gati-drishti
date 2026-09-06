@@ -4,9 +4,9 @@ import * as React from "react"
 import { 
   LayoutDashboard, 
   Activity,
-  Menu,
   MonitorPlay,
-  Code
+  Code,
+  Users
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { usePathname } from "next/navigation"
@@ -17,7 +17,7 @@ const mobileNavItems = [
   { icon: MonitorPlay, label: "Control", href: "/control-room" },
   { icon: Activity, label: "Network", href: "/network" },
   { icon: Code, label: "APIs", href: "/api-portal" },
-  { icon: Menu, label: "Menu", href: "#" },
+  { icon: Users, label: "Team", href: "/team" },
 ]
 
 export function MobileNav() {
