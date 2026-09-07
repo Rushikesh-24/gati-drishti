@@ -74,7 +74,7 @@ export default function TeamPage() {
 
             {/* Hero Section */}
             <div className="relative rounded-3xl bg-card border border-border p-10 sm:p-16 mb-12 overflow-hidden flex flex-col items-center text-center shadow-lg">
-                <div className="absolute inset-0 opacity-[0.03] pointer-events-none flex items-center justify-center bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-foreground via-background to-background">
+                <div className="absolute inset-0 opacity-[0.03] pointer-events-none flex items-center justify-center bg-[radial-gradient(ellipse_at_center,var(--tw-gradient-stops))] from-foreground via-background to-background">
                     <Users className="w-96 h-96 text-foreground" />
                 </div>
 
@@ -87,7 +87,7 @@ export default function TeamPage() {
                     <h1 className="text-4xl sm:text-6xl font-black text-foreground tracking-tight">
                         Team <span className="text-railway-green">Straw Hats</span>
                     </h1>
-                    
+
                     <p className="text-lg text-muted-foreground max-w-2xl mx-auto font-medium leading-relaxed mt-2">
                         Engineering GATI DRISHTI — a next-generation dynamic railway ETA intelligence and network management platform.
                     </p>
@@ -102,18 +102,18 @@ export default function TeamPage() {
                         <Card key={idx} className="bg-card border-border shadow-sm hover:shadow-md hover:border-railway-green/30 transition-all duration-300 group overflow-hidden">
                             <CardContent className="p-0">
                                 <div className="h-24 bg-muted/50 border-b border-border relative overflow-hidden flex justify-center">
-                                    <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent z-10" />
+                                    <div className="absolute inset-0 bg-linear-to-t from-background to-transparent z-10" />
                                     {/* Placeholder Background Pattern */}
-                                    <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-railway-green to-transparent" />
+                                    <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_center,var(--tw-gradient-stops))] from-railway-green to-transparent" />
                                 </div>
-                                
+
                                 <div className="relative z-20 -mt-12 flex flex-col items-center px-6 pb-6 text-center">
                                     {/* Avatar */}
                                     <div className="w-24 h-24 rounded-full border-4 border-card bg-muted shadow-md mb-4 overflow-hidden flex items-center justify-center">
                                         {member.image ? (
-                                            <img 
-                                                src={member.image} 
-                                                alt={member.name} 
+                                            <img
+                                                src={member.image}
+                                                alt={member.name}
                                                 className="w-full h-full object-cover"
                                                 onError={(e) => {
                                                     // Fallback to icon if image fails to load
@@ -129,11 +129,11 @@ export default function TeamPage() {
                                     <h3 className="text-xl font-bold text-foreground mb-1 group-hover:text-railway-green transition-colors">
                                         {member.name}
                                     </h3>
-                                    
+
                                     <p className="text-xs font-bold text-railway-green uppercase tracking-widest mb-3">
                                         {member.role}
                                     </p>
-                                    
+
                                     <div className="flex items-center gap-2 mb-5 px-3 py-1.5 bg-muted rounded-full">
                                         <Icon className="w-4 h-4 text-info-blue" />
                                         <span className="text-sm font-semibold text-foreground/80">{member.description}</span>

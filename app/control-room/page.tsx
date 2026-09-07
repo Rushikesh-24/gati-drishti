@@ -269,7 +269,7 @@ export default function ControlRoomPage() {
                 <AlertTriangle className="w-4 h-4" /> System Alerts
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-0 overflow-y-auto max-h-[400px]">
+            <CardContent className="p-0 overflow-y-auto max-h-100">
               <div className="flex flex-col divide-y divide-border">
                 {alerts.map(alert => (
                   <div key={alert.id} className="p-4 flex gap-4 hover:bg-muted/50 transition-colors animate-in slide-in-from-right-4">

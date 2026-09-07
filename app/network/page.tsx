@@ -175,7 +175,7 @@ export default function NetworkPage() {
             </CardHeader>
             <CardContent className="p-6">
               <div className="flex flex-col md:flex-row items-center justify-between gap-4 overflow-x-auto pb-2">
-                <div className="flex flex-col items-center text-center gap-2 p-4 rounded-xl bg-card border border-border shadow-sm w-full min-w-[200px]">
+                <div className="flex flex-col items-center text-center gap-2 p-4 rounded-xl bg-card border border-border shadow-sm w-full min-w-50">
                   <Database className="w-8 h-8 text-zinc-400" />
                   <span className="text-sm font-bold text-foreground">Data Mining</span>
                   <span className="text-xs text-muted-foreground leading-relaxed">Scraping historical NTES logs & weather APIs.</span>
@@ -183,7 +183,7 @@ export default function NetworkPage() {
                 <div className="hidden md:flex shrink-0">
                   <ArrowRightLeft className="w-6 h-6 text-muted-foreground opacity-50" />
                 </div>
-                <div className="flex flex-col items-center text-center gap-2 p-4 rounded-xl bg-card border border-border shadow-sm w-full min-w-[200px]">
+                <div className="flex flex-col items-center text-center gap-2 p-4 rounded-xl bg-card border border-border shadow-sm w-full min-w-50">
                   <Cpu className="w-8 h-8 text-info-blue" />
                   <span className="text-sm font-bold text-foreground">Feature Engineering</span>
                   <span className="text-xs text-muted-foreground leading-relaxed">Node congestion, day-of-week, seasonal variances.</span>
@@ -191,7 +191,7 @@ export default function NetworkPage() {
                 <div className="hidden md:flex shrink-0">
                   <ArrowRightLeft className="w-6 h-6 text-muted-foreground opacity-50" />
                 </div>
-                <div className="flex flex-col items-center text-center gap-2 p-4 rounded-xl bg-primary/5 border border-primary/20 shadow-sm relative overflow-hidden w-full min-w-[200px]">
+                <div className="flex flex-col items-center text-center gap-2 p-4 rounded-xl bg-primary/5 border border-primary/20 shadow-sm relative overflow-hidden w-full min-w-50">
                   <div className="absolute top-0 right-0 w-16 h-16 bg-primary/10 rounded-bl-full -z-10 blur-xl" />
                   <BrainCircuit className="w-8 h-8 text-primary" />
                   <span className="text-sm font-bold text-foreground">GATI Engine</span>
@@ -207,7 +207,7 @@ export default function NetworkPage() {
         <div className="xl:col-span-4 flex flex-col gap-8">
 
           {/* Crossing Logic Card - Fixed Theme */}
-          <Card className="border-border shadow-lg bg-gradient-to-br from-card to-muted/20">
+          <Card className="border-border shadow-lg bg-linear-to-br from-card to-muted/20">
             <CardHeader className="border-b border-border/50">
               <CardTitle className="flex items-center gap-2 text-lg font-bold">
                 <ArrowRightLeft className="w-5 h-5 text-railway-green" />
@@ -227,7 +227,7 @@ export default function NetworkPage() {
                       12951 <Badge variant="outline" className="bg-railway-green/10 text-railway-green border-railway-green/20">110 km/h</Badge>
                     </div>
                   </div>
-                  <div className="w-16 h-[2px] bg-border relative">
+                  <div className="w-16 h-0.5 bg-border relative">
                     <div className="absolute top-1/2 right-0 w-3 h-3 bg-railway-green rounded-full -translate-y-1/2 shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
                   </div>
                 </div>
@@ -239,7 +239,7 @@ export default function NetworkPage() {
                       BOXN-R <Badge variant="outline" className="bg-info-blue/10 text-info-blue border-info-blue/20">60 km/h</Badge>
                     </div>
                   </div>
-                  <div className="w-24 h-[2px] bg-border relative">
+                  <div className="w-24 h-0.5 bg-border relative">
                     <div className="absolute top-1/2 right-4 w-3 h-3 bg-info-blue rounded-full -translate-y-1/2" />
                   </div>
                 </div>
@@ -265,7 +265,7 @@ export default function NetworkPage() {
                 <AlertTriangle className="w-4 h-4" /> Live System Logs
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-4 flex-1 flex flex-col gap-3 min-h-[250px]">
+            <CardContent className="p-4 flex-1 flex flex-col gap-3 min-h-62.5">
               {alerts.map(alert => (
                 <div
                   key={alert.id}

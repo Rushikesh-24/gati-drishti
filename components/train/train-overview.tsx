@@ -51,8 +51,8 @@ export function TrainOverview({ train }: TrainOverviewProps) {
 
           {/* Arrow */}
           <div className="flex-1 flex flex-col items-center px-4">
-            <div className="w-full h-[2px] bg-border relative flex items-center justify-center">
-              <ArrowRight className="w-4 h-4 absolute text-muted-foreground bg-card px-1 w-6" />
+            <div className="w-full h-0.5 bg-border relative flex items-center justify-center">
+              <ArrowRight className="w-4 h-4 absolute text-muted-foreground bg-card px-1" />
             </div>
           </div>
 

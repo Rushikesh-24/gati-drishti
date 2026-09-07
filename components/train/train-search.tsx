@@ -20,11 +20,11 @@ type TabView = "live" | "historical";
 export function TrainSearch() {
   const [query, setQuery] = React.useState("")
   const debouncedQuery = useDebounce(query, 500)
-  
+
   const [results, setResults] = React.useState<Train[]>([])
   const [isLoading, setIsLoading] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
-  
+
   const [selectedTrain, setSelectedTrain] = React.useState<Train | null>(null)
   const [isDropdownOpen, setIsDropdownOpen] = React.useState(false)
 
@@ -141,10 +141,10 @@ export function TrainSearch() {
               if (results.length > 0) setIsDropdownOpen(true)
             }}
             placeholder="Search train number or train name (e.g., 12951)"
-            className="w-full h-12 pl-10 pr-10 bg-transparent border-none focus:outline-none text-sm placeholder:text-muted-foreground text-foreground"
+            className="w-full h-12 pl-10 pr-10 bg-transparent border-none focus:outline-none text-sm text-foreground"
           />
           {query && (
-            <button 
+            <button
               onClick={handleClear}
               className="absolute right-3 p-1 rounded-full hover:bg-muted text-muted-foreground transition-colors"
             >
@@ -152,9 +152,9 @@ export function TrainSearch() {
             </button>
           )}
         </div>
-        <Button 
-          variant="railway" 
-          size="lg" 
+        <Button
+          variant="railway"
+          size="lg"
           className="h-12 w-full sm:w-auto px-8 shrink-0"
           disabled={isLoading || query.length < 3}
           onClick={() => {
@@ -174,10 +174,10 @@ export function TrainSearch() {
 
       {/* Dropdown Results */}
       {isDropdownOpen && query.length >= 3 && !selectedTrain && (
-        <div className="absolute top-[72px] left-0 right-0 bg-card border border-border rounded-lg shadow-lg overflow-hidden z-50">
+        <div className="absolute top-18 left-0 right-0 bg-card border border-border rounded-lg shadow-lg overflow-hidden z-50">
           {isLoading ? (
             <div className="p-8 text-center text-sm text-muted-foreground flex flex-col items-center justify-center gap-3">
-              <Loader2 className="w-8 h-8 animate-spin text-railway-green" /> 
+              <Loader2 className="w-8 h-8 animate-spin text-railway-green" />
               <span>Querying Railway Systems...</span>
             </div>
           ) : error ? (
@@ -223,22 +223,22 @@ export function TrainSearch() {
       {selectedTrain && (
         <div ref={dashboardRef} className="flex flex-col gap-2 animate-in fade-in slide-in-from-top-4 duration-500 pb-12 scroll-mt-24">
           <TrainOverview train={selectedTrain} />
-          
+
           {/* Tab Navigation */}
           <div className="flex items-center bg-muted/40 p-1 rounded-lg w-full md:w-fit mt-4 border border-border">
-            <button 
-              onClick={() => setActiveTab("live")} 
+            <button
+              onClick={() => setActiveTab("live")}
               className={cn(
-                "flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-semibold rounded-md transition-all duration-300", 
+                "flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-semibold rounded-md transition-all duration-300",
                 activeTab === "live" ? "bg-card shadow-sm text-foreground" : "text-muted-foreground hover:text-foreground"
               )}
             >
               <Activity className="w-4 h-4" /> Live Tracking & AI
             </button>
-            <button 
-              onClick={() => setActiveTab("historical")} 
+            <button
+              onClick={() => setActiveTab("historical")}
               className={cn(
-                "flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-semibold rounded-md transition-all duration-300", 
+                "flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-2.5 text-sm font-semibold rounded-md transition-all duration-300",
                 activeTab === "historical" ? "bg-card shadow-sm text-foreground" : "text-muted-foreground hover:text-foreground"
               )}
             >
@@ -246,7 +246,7 @@ export function TrainSearch() {
             </button>
           </div>
 
-          <div className="mt-2 min-h-[400px]">
+          <div className="mt-2 min-h-100">
             {activeTab === "live" && (
               <div className="flex flex-col gap-4 animate-in fade-in duration-500">
                 {liveStatus && (
@@ -256,9 +256,9 @@ export function TrainSearch() {
                 {/* AI CTA */}
                 {liveStatus && aiState === "idle" && (
                   <div className="mt-6 flex justify-center animate-in fade-in zoom-in-95">
-                    <Button 
-                      onClick={handleRunAI} 
-                      size="lg" 
+                    <Button
+                      onClick={handleRunAI}
+                      size="lg"
                       className="bg-info-blue hover:bg-info-blue/90 text-white shadow-lg shadow-info-blue/20 gap-2 h-14 px-8 text-lg font-bold"
                     >
                       <BrainCircuit className="w-6 h-6 animate-pulse" />
