@@ -6,7 +6,8 @@ import {
   Activity,
   MonitorPlay,
   Code,
-  Users
+  Users,
+  History
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { usePathname } from "next/navigation"
@@ -16,6 +17,7 @@ const mainNavItems = [
   { icon: LayoutDashboard, label: "Overview", href: "/" },
   { icon: MonitorPlay, label: "Control Room", href: "/control-room" },
   { icon: Activity, label: "Network Intelligence", href: "/network" },
+  { icon: History, label: "Historical Intelligence", href: "/intelligence" },
   { icon: Code, label: "Developer APIs", href: "/api-portal" },
   { icon: Users, label: "The Team", href: "/team" },
 ]

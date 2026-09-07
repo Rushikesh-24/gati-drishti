@@ -41,12 +41,12 @@ export function generateHistoricalIntelligence(trainNumber: string): HistoricalI
   ];
 
   const stationDelays: StationDelayNode[] = [
-    { station: "STN-A", avgDelay: 2, recovery: 0 },
-    { station: "STN-B", avgDelay: 12, recovery: 0 },
-    { station: "STN-C", avgDelay: 25, recovery: 0 },
-    { station: "STN-D", avgDelay: 18, recovery: 10 }, // Recovering
-    { station: "STN-E", avgDelay: 22, recovery: 0 },
-    { station: "STN-F", avgDelay: 15, recovery: 8 },
+    { station: "NDLS", avgDelay: 2, recovery: 0 },
+    { station: "MTJ", avgDelay: 12, recovery: 0 },
+    { station: "KOTA", avgDelay: 25, recovery: 0 },
+    { station: "RTM", avgDelay: 18, recovery: 10 }, // Recovering
+    { station: "BRC", avgDelay: 22, recovery: 0 },
+    { station: "MMCT", avgDelay: 15, recovery: 8 },
   ];
 
   const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];

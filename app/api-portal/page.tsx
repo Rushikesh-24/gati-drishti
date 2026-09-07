@@ -30,7 +30,15 @@ function EndpointCard({ endpoint }: { endpoint: any }) {
     try {
       let finalPath = endpoint.path;
       if (endpoint.hasParam) {
-        finalPath = finalPath.replace("{id}", paramInput || "demo");
+        if (finalPath.includes("{id}")) {
+          finalPath = finalPath.replace("{id}", encodeURIComponent(paramInput || "demo"));
+        } else if (finalPath.includes("{query}")) {
+          finalPath = finalPath.replace("{query}", encodeURIComponent(paramInput || ""));
+        } else if (endpoint.queryKey) {
+          finalPath = finalPath + "?" + endpoint.queryKey + "=" + encodeURIComponent(paramInput || "");
+        } else {
+          finalPath = finalPath + "?q=" + encodeURIComponent(paramInput || "");
+        }
       }
 
       const options: RequestInit = {
@@ -199,6 +207,36 @@ export default function ApiPortalPage() {
   const endpoints = [
     {
       method: "GET",
+      path: "/api/stations/search?q={query}",
+      hasParam: true,
+      queryKey: "q",
+      paramLabel: "Search Query",
+      defaultParam: "delhi",
+      title: "Search Stations",
+      description: "Search for railway stations across India by name or station code. Returns a comprehensive list of matching nodes.",
+      icon: <Server className="w-5 h-5 text-purple-400" />,
+      tag: "Directory API",
+      responses: [
+        { code: 200, desc: "Success", payload: `{\n  "success": true,\n  "data": [\n    {\n      "name": "NEW DELHI",\n      "code": "NDLS",\n      "state": "Delhi",\n      "zone": "NR",\n      "latitude": 28.642512,\n      "longitude": 77.21832,\n      "isJunction": false,\n      "routeCount": 0\n    }\n  ]\n}` },
+      ]
+    },
+    {
+      method: "GET",
+      path: "/api/stations/{id}",
+      hasParam: true,
+      paramLabel: "Station Code",
+      defaultParam: "NDLS",
+      title: "Station Details",
+      description: "Get detailed information about a specific railway station using its unique station code.",
+      icon: <Building2 className="w-5 h-5 text-pink-400" />,
+      tag: "Directory API",
+      responses: [
+        { code: 200, desc: "Success", payload: `{\n  "success": true,\n  "data": {\n    "name": "NEW DELHI",\n    "code": "NDLS",\n    "state": "Delhi",\n    "zone": "NR",\n    "latitude": 28.642512,\n    "longitude": 77.21832,\n    "isJunction": false,\n    "routeCount": 0\n  }\n}` },
+        { code: 404, desc: "Not Found", payload: `{\n  "success": false,\n  "error": "Station not found"\n}` }
+      ]
+    },
+    {
+      method: "GET",
       path: "/api/trains/{id}/live",
       hasParam: true,
       paramLabel: "Train Number",
@@ -249,20 +287,6 @@ export default function ApiPortalPage() {
       tag: "Core API",
       responses: [
         { code: 200, desc: "Success", payload: `{\n  "success": true,\n  "data": [\n    {\n      "id": "alert-772",\n      "type": "HIGH",\n      "node": "ST",\n      "message": "Major congestion detected at Surat Junction.",\n      "timestamp": "2026-09-06T07:54:00.000Z"\n    }\n  ]\n}` }
-      ]
-    },
-    {
-      method: "GET",
-      path: "/api/stations/{id}/infrastructure",
-      hasParam: true,
-      paramLabel: "Station Code",
-      defaultParam: "NDLS",
-      title: "Station Infrastructure Capacity",
-      description: "Retrieves live platform availability, rake maintenance slots, and intersecting corridor traffic for yard masters.",
-      icon: <Building2 className="w-5 h-5 text-blue-400" />,
-      tag: "Operations",
-      responses: [
-        { code: 200, desc: "Success", payload: `{\n  "success": true,\n  "data": {\n    "stationCode": "NDLS",\n    "platforms": 16,\n    "occupied": 12,\n    "approachingTrains": 4,\n    "congestionIndex": 88\n  }\n}` }
       ]
     },
     {
