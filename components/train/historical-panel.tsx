@@ -12,15 +12,79 @@ interface HistoricalPanelProps {
 }
 
 export function HistoricalPanel({ trainNumber }: HistoricalPanelProps) {
-  // We use useMemo so it only generates once per train selection
-  const data = React.useMemo(() => generateHistoricalIntelligence(trainNumber), [trainNumber]);
+  const [data, setData] = React.useState<any>(null);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState<string | null>(null);
 
-  const [mounted, setMounted] = React.useState(false);
   React.useEffect(() => {
-    setMounted(true);
-  }, []);
+    let isMounted = true;
+    async function fetchData() {
+      try {
+        setLoading(true);
+        // Get fallback mock data for things we don't have in DB (like journey history)
+        const mockData = generateHistoricalIntelligence(trainNumber);
+        
+        // Fetch real delays
+        const res = await fetch(`/api/intelligence/train/${trainNumber}`);
+        const json = await res.json();
+        
+        if (json.success && json.data.route && json.data.route.length > 0) {
+          const route = json.data.route;
+          
+          let totalDelay = 0;
+          let delayCount = 0;
+          
+          const realStationDelays = route.map((r: any, idx: number) => {
+            const currentDelay = r.avg_delay !== null ? r.avg_delay : 0;
+            const prevDelay = idx > 0 && route[idx-1].avg_delay !== null ? route[idx-1].avg_delay : currentDelay;
+            const recovery = currentDelay < prevDelay ? prevDelay - currentDelay : 0;
+            
+            if (r.avg_delay !== null) {
+              totalDelay += r.avg_delay;
+              delayCount++;
+            }
+            
+            return {
+              station: r.code,
+              avgDelay: Math.max(0, currentDelay),
+              recovery: Math.max(0, recovery)
+            };
+          });
 
-  if (!mounted) return <div className="h-96 w-full animate-pulse bg-muted rounded-md" />;
+          // Filter out stations with no delay data at all if there are too many
+          const filteredStations = realStationDelays.filter((s: any) => s.avgDelay > 0 || s.recovery > 0);
+          
+          const realAvgDelay = delayCount > 0 ? Math.round(totalDelay / delayCount) : mockData.avgDelayOverall;
+          
+          if (isMounted) {
+            setData({
+              ...mockData,
+              avgDelayOverall: realAvgDelay,
+              stationDelays: filteredStations.length > 0 ? filteredStations : realStationDelays,
+              insights: [
+                `Real historical data analyzed across ${route.length} stations.`,
+                `Current network average delay profile is ${realAvgDelay} min.`,
+                ...mockData.insights.slice(1)
+              ]
+            });
+          }
+        } else {
+          // Fallback to mock if API fails or no route data
+          if (isMounted) setData(mockData);
+        }
+      } catch (err) {
+        console.error("Failed to fetch real historical data:", err);
+        if (isMounted) setData(generateHistoricalIntelligence(trainNumber));
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    }
+    fetchData();
+    
+    return () => { isMounted = false; };
+  }, [trainNumber]);
+
+  if (loading || !data) return <div className="h-96 w-full animate-pulse bg-muted rounded-md" />;
 
   return (
     <div className="flex flex-col gap-6 animate-in fade-in duration-500">
@@ -65,7 +129,7 @@ export function HistoricalPanel({ trainNumber }: HistoricalPanelProps) {
               <Lightbulb className="w-4 h-4" /> AI Insights
             </span>
             <ul className="flex flex-col gap-3">
-              {data.insights.map((insight, idx) => (
+              {data.insights.map((insight: string, idx: number) => (
                 <li key={idx} className="text-sm text-foreground/90 leading-tight flex items-start gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-info-blue mt-1.5 shrink-0" />
                   {insight}

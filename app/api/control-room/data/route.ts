@@ -6,18 +6,25 @@ export async function GET() {
     // 1. Fetch High Risk Fleet (Trains with highest average historical delays)
     // We aggregate delay per train, then join with train_details for names/types
     const fleetResult = await db.execute(`
-      SELECT 
-        t.train_no, 
-        td.train_name, 
-        td.type_code,
-        ROUND(AVG(t.avg_delay), 1) as avg_route_delay,
-        COUNT(t.station_name) as stations_analysed
-      FROM train_delay_aggregates t
-      LEFT JOIN train_details td ON t.train_no = td.train_no
-      GROUP BY t.train_no
-      HAVING stations_analysed > 5
-      ORDER BY avg_route_delay DESC
-      LIMIT 12
+      WITH TrainStats AS (
+        SELECT 
+          t.train_no, 
+          td.train_name, 
+          td.type_code,
+          ROUND(AVG(t.avg_delay), 1) as avg_route_delay,
+          COUNT(t.station_name) as stations_analysed
+        FROM train_delay_aggregates t
+        LEFT JOIN train_details td ON t.train_no = td.train_no
+        GROUP BY t.train_no
+        HAVING stations_analysed > 5
+      )
+      SELECT * FROM (SELECT * FROM TrainStats WHERE avg_route_delay > 120 ORDER BY RANDOM() LIMIT 20)
+      UNION ALL
+      SELECT * FROM (SELECT * FROM TrainStats WHERE avg_route_delay > 60 AND avg_route_delay <= 120 ORDER BY RANDOM() LIMIT 20)
+      UNION ALL
+      SELECT * FROM (SELECT * FROM TrainStats WHERE avg_route_delay > 15 AND avg_route_delay <= 60 ORDER BY RANDOM() LIMIT 30)
+      UNION ALL
+      SELECT * FROM (SELECT * FROM TrainStats WHERE avg_route_delay <= 15 ORDER BY RANDOM() LIMIT 30)
     `);
 
     // 2. Fetch Network Bottlenecks (Stations with highest average historical delays)

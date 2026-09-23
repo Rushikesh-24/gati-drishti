@@ -118,6 +118,19 @@ export async function fetchLiveStatus(trainNumber: string): Promise<LiveStatus |
       route[currentIdx].delayMinutes = delayMinutes;
     }
 
+    // Calculate expected arrival at current/next station
+    let expectedArrival = "00:00";
+    if (route[currentIdx]) {
+      const scheduledTimeStr = route[currentIdx].scheduledArrival;
+      if (scheduledTimeStr && scheduledTimeStr !== "00:00") {
+        const [hours, mins] = scheduledTimeStr.split(":").map(Number);
+        const totalMins = (hours * 60) + mins + delayMinutes;
+        const newHours = Math.floor(totalMins / 60) % 24;
+        const newMins = totalMins % 60;
+        expectedArrival = `${newHours.toString().padStart(2, '0')}:${newMins.toString().padStart(2, '0')}`;
+      }
+    }
+
     return {
       trainNumber,
       currentStation: route[currentIdx]?.name || ltsData.source_stn_name || "Source",
@@ -125,7 +138,7 @@ export async function fetchLiveStatus(trainNumber: string): Promise<LiveStatus |
       nextStation: route[currentIdx + 1]?.name || ltsData.dest_stn_name || "Destination",
       delayMinutes: delayMinutes,
       progressPercentage: Math.round((currentIdx / (route.length - 1 || 1)) * 100),
-      expectedArrival: route[route.length - 1]?.scheduledArrival || "00:00",
+      expectedArrival: expectedArrival,
       lastUpdated: lastUpdatedMsg,
       route: route,
       isDemo: false,

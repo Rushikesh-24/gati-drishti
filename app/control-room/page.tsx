@@ -5,7 +5,7 @@ import {
   Activity, AlertTriangle, ShieldCheck, Zap,
   BarChart3, Clock, TrainFront, ShieldAlert,
   ChevronRight, BrainCircuit, Navigation, Database,
-  Loader2
+  Loader2, Search, Filter
 } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -42,6 +42,8 @@ export default function ControlRoomPage() {
   const [alerts, setAlerts] = React.useState<DynamicAlert[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [selectedTrain, setSelectedTrain] = React.useState<FleetTrain | null>(null);
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [filterRisk, setFilterRisk] = React.useState("ALL");
 
   React.useEffect(() => {
     async function loadData() {
@@ -97,9 +99,10 @@ export default function ControlRoomPage() {
   }, []);
 
   const getRiskLevel = (delay: number) => {
-    if (delay > 45) return { label: 'CRITICAL', color: 'red', score: 30 };
-    if (delay > 15) return { label: 'HIGH', color: 'orange', score: 60 };
-    return { label: 'MEDIUM', color: 'yellow', score: 85 }; // We only query delayed trains, so none are strictly LOW
+    if (delay > 120) return { label: 'CRITICAL', color: 'red', score: 20 };
+    if (delay > 60) return { label: 'HIGH', color: 'orange', score: 40 };
+    if (delay > 15) return { label: 'MEDIUM', color: 'yellow', score: 70 };
+    return { label: 'LOW', color: 'green', score: 90 };
   }
 
   const activeTrains = fleet.length;
@@ -170,13 +173,39 @@ export default function ControlRoomPage() {
           </Card>
 
           {/* HIGH-RISK FLEET */}
-          <Card className="border-border bg-card shadow-xl flex-1 backdrop-blur-sm">
-            <CardHeader className="pb-3 border-b border-border bg-muted/50">
+          <Card className="border-border bg-card shadow-xl flex-1 backdrop-blur-sm flex flex-col">
+            <CardHeader className="pb-3 border-b border-border bg-muted/50 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
                 Historical Risk Fleet
               </CardTitle>
+              <div className="flex items-center gap-2">
+                <div className="relative">
+                  <Search className="w-4 h-4 absolute left-2.5 top-2 text-muted-foreground" />
+                  <input
+                    type="text"
+                    placeholder="Search train..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-8 pr-3 py-1.5 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-primary w-full sm:w-48"
+                  />
+                </div>
+                <div className="relative">
+                  <Filter className="w-4 h-4 absolute left-2.5 top-2 text-muted-foreground" />
+                  <select
+                    value={filterRisk}
+                    onChange={(e) => setFilterRisk(e.target.value)}
+                    className="pl-8 pr-3 py-1.5 text-sm bg-background border border-border rounded-md focus:outline-none focus:ring-1 focus:ring-primary appearance-none cursor-pointer"
+                  >
+                    <option value="ALL">All Risks</option>
+                    <option value="CRITICAL">Critical</option>
+                    <option value="HIGH">High</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="LOW">Low</option>
+                  </select>
+                </div>
+              </div>
             </CardHeader>
-            <CardContent className="p-0 overflow-x-auto">
+            <CardContent className="p-0 overflow-x-auto flex-1">
               {loading ? (
                 <div className="h-[200px] flex items-center justify-center text-muted-foreground">
                   <Loader2 className="w-6 h-6 animate-spin" />
@@ -193,7 +222,13 @@ export default function ControlRoomPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border">
-                    {fleet.map((train) => {
+                    {fleet.filter(train => {
+                      const query = searchQuery.toLowerCase();
+                      const matchesSearch = train.train_no.toLowerCase().includes(query) || (train.name && train.name.toLowerCase().includes(query));
+                      const risk = getRiskLevel(train.avg_delay).label;
+                      const matchesFilter = filterRisk === "ALL" || risk === filterRisk;
+                      return matchesSearch && matchesFilter;
+                    }).map((train) => {
                       const risk = getRiskLevel(train.avg_delay);
                       return (
                         <tr
@@ -213,7 +248,8 @@ export default function ControlRoomPage() {
                               "px-2.5 py-1 text-[10px] font-bold uppercase rounded-full border",
                               risk.label === "CRITICAL" ? "bg-red-500/10 text-red-500 border-red-500/20" :
                                 risk.label === "HIGH" ? "bg-orange-500/10 text-orange-500 border-orange-500/20" :
-                                  "bg-yellow-500/10 text-yellow-600 border-yellow-500/20"
+                                  risk.label === "MEDIUM" ? "bg-yellow-500/10 text-yellow-600 border-yellow-500/20" :
+                                    "bg-green-500/10 text-green-500 border-green-500/20"
                             )}>
                               {risk.label}
                             </span>
